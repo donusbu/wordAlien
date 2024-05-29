@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spanish Alien</title>
+    <style>
+        .option {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            margin: 10px;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spanish Alien</h1>
+    {% if current_word %}
+        <h2>{{ current_word }}</h2>
+        <form method="post" action="{{ url_for('check') }}">
+            <input type="hidden" name="word" value="{{ current_word }}">
+            <input type="hidden" name="points" value="{{ points }}">
+            {% for option in words[current_word] %}
+                <div class="option" onclick="document.getElementById('answer').value='{{ option }}'; this.parentElement.submit();">{{ option }}</div>
+            {% endfor %}
+            <input type="hidden" id="answer" name="answer">
+        </form>
+    {% else %}
+        <h2>Game Over!</h2>
+        <p>Your final score is: {{ points }}</p>
+        <a href="{{ url_for('score', points=points) }}">View Score</a>
+    {% endif %}
+</body>
+</html>
